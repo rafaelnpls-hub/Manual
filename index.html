@@ -1,0 +1,648 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+  <meta charset="utf-8" />
+  <meta content="width=device-width,initial-scale=1" name="viewport" />
+  <title>Manual - Carrefour</title>
+  <style>
+    /* same as v4 */
+    :root {
+      --bg: #ffffff;
+      --fg: #111827;
+      --muted: #6b7280;
+      --card: #f9fafb;
+      --border: #e5e7eb;
+      --accent: #2563eb;
+      --accent2: #1d4ed8;
+      --shadow: rgba(0, 0, 0, .06);
+    }
+
+    :root.dark {
+      --bg: #0b1220;
+      --fg: #e5e7eb;
+      --muted: #9ca3af;
+      --card: #111a2b;
+      --border: #1f2a44;
+      --accent: #60a5fa;
+      --accent2: #93c5fd;
+      --shadow: rgba(0, 0, 0, .35);
+    }
+
+    * {
+      box-sizing: border-box
+    }
+
+    html,
+    body {
+      height: 100%
+    }
+
+    body {
+      margin: 0;
+      font-family: system-ui, -apple-system, Segoe UI, Roboto, Ubuntu, Cantarell, Noto Sans, sans-serif;
+      background: var(--bg);
+      color: var(--fg);
+    }
+
+    a {
+      color: var(--accent);
+      text-decoration: none
+    }
+
+    a:hover {
+      text-decoration: underline
+    }
+
+    header {
+      position: sticky;
+      top: 0;
+      z-index: 20;
+      background: linear-gradient(180deg, var(--bg), rgba(0, 0, 0, 0));
+      backdrop-filter: saturate(180%) blur(8px);
+      border-bottom: 1px solid var(--border);
+    }
+
+    .topbar {
+      display: flex;
+      gap: 12px;
+      align-items: center;
+      justify-content: space-between;
+      padding: 14px 18px;
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+
+    .brand h1 {
+      font-size: 18px;
+      margin: 0
+    }
+
+    .controls {
+      display: flex;
+      gap: 10px;
+      align-items: center;
+      flex-wrap: wrap;
+      justify-content: flex-end
+    }
+
+    .search {
+      position: relative;
+      min-width: 280px;
+      flex: 1
+    }
+
+    .search input {
+      width: 100%;
+      padding: 10px 12px 10px 38px;
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      background: var(--card);
+      color: var(--fg);
+      outline: none
+    }
+
+    .search svg {
+      position: absolute;
+      left: 12px;
+      top: 50%;
+      transform: translateY(-50%);
+      fill: var(--muted)
+    }
+
+    .btn {
+      padding: 10px 12px;
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      background: var(--card);
+      color: var(--fg);
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      gap: 8px
+    }
+
+    .btn:hover {
+      border-color: var(--accent)
+    }
+
+    main {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 18px;
+      display: grid;
+      grid-template-columns: 320px 1fr;
+      gap: 18px
+    }
+
+    @media (max-width:980px) {
+      main {
+        grid-template-columns: 1fr
+      }
+
+      .sidebar {
+        position: relative;
+        top: auto
+      }
+    }
+
+    .sidebar {
+      position: sticky;
+      top: 72px;
+      align-self: start;
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      background: var(--card);
+      box-shadow: 0 8px 20px var(--shadow);
+    }
+
+    .sidebar .inner {
+      padding: 14px
+    }
+
+    .sidebar h2 {
+      font-size: 14px;
+      margin: 0 0 10px 0;
+      color: var(--muted);
+      text-transform: uppercase;
+      letter-spacing: .08em
+    }
+
+    .details {
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      overflow: hidden;
+      background: transparent
+    }
+
+    .details+.details {
+      margin-top: 10px
+    }
+
+    details summary {
+      cursor: pointer;
+      list-style: none;
+      padding: 10px 12px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 10px
+    }
+
+    details summary::-webkit-details-marker {
+      display: none
+    }
+
+    summary .title {
+      font-weight: 800
+    }
+
+    .submenu {
+      padding: 0 8px 10px 8px
+    }
+
+    .submenu a {
+      display: block;
+      padding: 8px 10px;
+      border-radius: 10px;
+      border: 1px solid transparent;
+      color: var(--fg)
+    }
+
+    .submenu a:hover {
+      background: rgba(37, 99, 235, .08);
+      border-color: rgba(37, 99, 235, .18)
+    }
+
+    .submenu a.l2 {
+      font-weight: 600
+    }
+
+    .submenu a.l3 {
+      margin-left: 12px;
+      font-size: 13px;
+      color: var(--muted)
+    }
+
+    .section {
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      background: var(--card);
+      box-shadow: 0 8px 20px var(--shadow);
+      overflow: hidden
+    }
+
+    .section header {
+      position: relative;
+      top: auto;
+      border-bottom: 1px solid var(--border);
+      background: var(--card)
+    }
+
+    .section .head {
+      padding: 14px 16px
+    }
+
+    .section .head h2 {
+      margin: 0;
+      font-size: 18px
+    }
+
+    .content {
+      padding: 16px 16px 22px 16px
+    }
+
+    .content h3,
+    .content h4 {
+      margin: 20px 0 8px 0
+    }
+
+    .content h3 {
+      font-size: 16px;
+      color: var(--accent2)
+    }
+
+    .content h4 {
+      font-size: 14px;
+      color: var(--muted);
+      text-transform: uppercase;
+      letter-spacing: .06em
+    }
+
+    .content p {
+      line-height: 1.55;
+      margin: 10px 0;
+      color: var(--fg)
+    }
+
+    .content img {
+      max-width: 100%;
+      border-radius: 12px;
+      border: 1px solid var(--border);
+      margin: 10px 0
+    }
+
+    .video-slot {
+      border: 2px dashed var(--border);
+      border-radius: 14px;
+      padding: 14px;
+      margin: 14px 0;
+      background: rgba(0, 0, 0, 0.02)
+    }
+
+    :root.dark .video-slot {
+      background: rgba(255, 255, 255, 0.03)
+    }
+
+    .video-slot strong {
+      display: block;
+      font-size: 14px;
+      margin-bottom: 6px
+    }
+
+    .video-slot .hint {
+      font-size: 12px;
+      color: var(--muted);
+      margin: 0
+    }
+
+    mark {
+      background: rgba(37, 99, 235, .18);
+      color: inherit;
+      border-radius: 6px;
+      padding: 0 3px
+    }
+
+    .hidden {
+      display: none !important
+    }
+
+    .footer {
+      padding: 14px 18px;
+      color: var(--muted);
+      text-align: center;
+      font-size: 12px
+    }
+
+    .download-link {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      margin-top: 10px;
+      padding: 10px 12px;
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      background: var(--card);
+      color: var(--fg);
+      text-decoration: none;
+      font-weight: 600;
+    }
+
+    .download-link:hover {
+      border-color: var(--accent);
+      text-decoration: none;
+    }
+
+    .dl-icon {
+      width: 18px;
+      height: 18px;
+      fill: currentColor
+    }
+  </style>
+</head>
+
+<body>
+  <header>
+    <div class="topbar">
+      <div class="brand">
+        <h1>Manual - Carrefour</h1>
+      </div>
+      <div class="controls">
+        <div class="search"><svg aria-hidden="true" height="18" viewbox="0 0 24 24" width="18">
+            <path d="M10 18a8 8 0 1 1 5.293-14.293A8 8 0 0 1 10 18Zm11 3-6.1-6.1a10 10 0 1 0-1.4 1.4L19.6 22 21 21Z">
+            </path>
+          </svg><input autocomplete="off" id="search" placeholder="Buscar…" type="search" /></div>
+        <button class="btn" id="clearSearch" title="Limpar busca">Limpar</button>
+        <button aria-pressed="false" class="btn" id="themeToggle" title="Alternar tema"><span>Tema:
+            Claro</span></button>
+      </div>
+    </div>
+  </header>
+  <main>
+    <aside class="sidebar">
+      <div class="inner">
+        <h2>Fluxos</h2>
+        <details class="details" data-section="cadastro" open="">
+          <summary><span class="title">Cadastro</span><span aria-hidden="true">▾</span></summary>
+          <div class="submenu"><a class="l2" href="#cadastro">Abrir Cadastro</a></div>
+        </details>
+        <details class="details" data-section="provisao">
+          <summary><span class="title">Provisão</span><span aria-hidden="true">▾</span></summary>
+          <div class="submenu"><a class="l2" href="#provisao">Abrir Provisão</a></div>
+        </details>
+        <details class="details" data-section="subsidios">
+          <summary><span class="title">Subsídios</span><span aria-hidden="true">▾</span></summary>
+          <div class="submenu"><a class="l2" href="#subsidios">Abrir Subsídios</a></div>
+        </details>
+        <details class="details" data-section="obf">
+          <summary><span class="title">OBF</span><span aria-hidden="true">▾</span></summary>
+          <div class="submenu"><a class="l2" href="#obf">Abrir OBF</a></div>
+        </details>
+        <details class="details" data-section="pagamentos">
+          <summary><span class="title">Pagamentos</span><span aria-hidden="true">▾</span></summary>
+          <div class="submenu"><a class="l2" href="#pagamentos">Abrir Pagamentos</a></div>
+        </details>
+      </div>
+    </aside>
+    <div>
+      <section class="section" id="cadastro">
+        <header>
+          <div class="head">
+            <h2>Cadastro</h2>
+          </div>
+        </header>
+        <div class="content">
+          <div class="video-slot">
+            <div style="width:100%;aspect-ratio:16/9;"><iframe allowfullscreen="" frameborder="0" height="100%"
+                scrolling="no"
+                src="https://queirozcavalcanti.sharepoint.com/sites/EquipeCarrefour/_layouts/15/embed.aspx?UniqueId=6f881867-d296-47a3-9d8c-e3d865a66869&amp;embed=%7B%22ust%22%3Atrue%2C%22hv%22%3A%22CopyEmbedCode%22%7D&amp;referrer=StreamWebApp&amp;referrerScenario=EmbedDialog.Create"
+                style="width:100%;height:100%;border:1px solid var(--border);border-radius:12px;"
+                title="Reciclagem - Cadastro" width="100%"></iframe></div><a class="download-link"
+              href="https://queirozcavalcanti.sharepoint.com/:w:/s/EquipeCarrefour/IQDJQZYa-wFBRJgzBSlETa6FAS4UkdcBAB4ASsuct1bLRWk?e=UBbGiH"
+              rel="noopener" target="_blank"><svg aria-hidden="true" class="dl-icon" viewbox="0 0 24 24">
+                <path
+                  d="M12 3a1 1 0 0 1 1 1v9.586l2.293-2.293a1 1 0 1 1 1.414 1.414l-4.004 4.004a1 1 0 0 1-1.414 0L7.285 12.707A1 1 0 1 1 8.7 11.293L11 13.586V4a1 1 0 0 1 1-1Zm-7 15a1 1 0 0 1 1-1h12a1 1 0 1 1 0 2H6a1 1 0 0 1-1-1Z">
+                </path>
+              </svg><span>Reciclagem Cadastro</span></a>
+          </div><img alt="cadastro página 1" loading="lazy" src="assets/cadastro_page_1_9ecc501a4a.png" /><img
+            alt="cadastro página 2" loading="lazy" src="assets/cadastro_page_2_7f6bce764b.png" /><img
+            alt="cadastro página 3" loading="lazy" src="assets/cadastro_page_3_fa5ddc3418.png" /><img
+            alt="cadastro página 4" loading="lazy" src="assets/cadastro_page_4_215ccef49f.png" /><img
+            alt="cadastro página 5" loading="lazy" src="assets/cadastro_page_5_aec7564c71.png" /><img
+            alt="cadastro página 6" loading="lazy" src="assets/cadastro_page_6_6c28ca8386.png" /><img
+            alt="cadastro página 7" loading="lazy" src="assets/cadastro_page_7_d40a8b6745.png" /><img
+            alt="cadastro página 8" loading="lazy" src="assets/cadastro_page_8_f72cd9dce0.png" /><img
+            alt="cadastro página 9" loading="lazy" src="assets/cadastro_page_9_03961a470a.png" /><img
+            alt="cadastro página 10" loading="lazy" src="assets/cadastro_page_10_181b13ba03.png" /><img
+            alt="cadastro página 11" loading="lazy" src="assets/cadastro_page_11_e58fe526c8.png" /><img
+            alt="cadastro página 12" loading="lazy" src="assets/cadastro_page_12_c985630723.png" /><img
+            alt="cadastro página 13" loading="lazy" src="assets/cadastro_page_13_323c73bacb.png" /><img
+            alt="cadastro página 14" loading="lazy" src="assets/cadastro_page_14_8afbb17f28.png" />
+        </div>
+      </section>
+      <section class="section" id="provisao">
+        <header>
+          <div class="head">
+            <h2>Provisão</h2>
+          </div>
+        </header>
+        <div class="content">
+          <div class="video-slot">
+            <div style="width:100%;aspect-ratio:16/9;"><iframe allowfullscreen="" frameborder="0" height="100%"
+                scrolling="no"
+                src="https://queirozcavalcanti.sharepoint.com/sites/EquipeCarrefour/_layouts/15/embed.aspx?UniqueId=dc304ae7-19e3-4829-82d0-3ee3639fbe63&amp;embed=%7B%22ust%22%3Atrue%2C%22hv%22%3A%22CopyEmbedCode%22%7D&amp;referrer=StreamWebApp&amp;referrerScenario=EmbedDialog.Create"
+                style="width:100%;height:100%;border:1px solid var(--border);border-radius:12px;"
+                title="Reciclagem - Provisionamento" width="100%"></iframe></div>
+          </div><img alt="provisao página 1" loading="lazy" src="assets/provisao_page_1_64a6ad4cc5.png" /><img
+            alt="provisao página 2" loading="lazy" src="assets/provisao_page_2_26b3261fc5.png" /><img
+            alt="provisao página 3" loading="lazy" src="assets/provisao_page_3_ba27a139a3.png" /><img
+            alt="provisao página 4" loading="lazy" src="assets/provisao_page_4_c07158caa3.png" /><img
+            alt="provisao página 5" loading="lazy" src="assets/provisao_page_5_b6ac408997.png" /><img
+            alt="provisao página 6" loading="lazy" src="assets/provisao_page_6_24ea87954c.png" />
+        </div>
+      </section>
+      <section class="section" id="subsidios">
+        <header>
+          <div class="head">
+            <h2>Subsídios</h2>
+          </div>
+        </header>
+        <div class="content">
+          <div class="video-slot">
+            <div style="width:100%;aspect-ratio:16/9;"><iframe allowfullscreen="" frameborder="0" height="100%"
+                scrolling="no"
+                src="https://queirozcavalcanti.sharepoint.com/sites/EquipeCarrefour/_layouts/15/embed.aspx?UniqueId=28fe2264-f1a8-460f-b1e8-d5409be41838&amp;embed=%7B%22ust%22%3Atrue%2C%22hv%22%3A%22CopyEmbedCode%22%7D&amp;referrer=StreamWebApp&amp;referrerScenario=EmbedDialog.Create"
+                style="width:100%;height:100%;border:1px solid var(--border);border-radius:12px;"
+                title="Reciclagem - Subsídios" width="100%"></iframe></div><a class="download-link"
+              href="https://queirozcavalcanti.sharepoint.com/:w:/s/EquipeCarrefour/IQDHWFrFzSe2T7k4eS2j8__EAWUxLSIr_jSfZowVUJBnkoY?e=A2cJCS"
+              rel="noopener" target="_blank"><svg aria-hidden="true" class="dl-icon" viewbox="0 0 24 24">
+                <path
+                  d="M12 3a1 1 0 0 1 1 1v9.586l2.293-2.293a1 1 0 1 1 1.414 1.414l-4.004 4.004a1 1 0 0 1-1.414 0L7.285 12.707A1 1 0 1 1 8.7 11.293L11 13.586V4a1 1 0 0 1 1-1Zm-7 15a1 1 0 0 1 1-1h12a1 1 0 1 1 0 2H6a1 1 0 0 1-1-1Z">
+                </path>
+              </svg><span>Reciclagem Subsídios</span></a>
+          </div><img alt="subsidios página 1" loading="lazy" src="assets/subsidios_page_1_aee69e9b74.png" /><img
+            alt="subsidios página 2" loading="lazy" src="assets/subsidios_page_2_0e26ad26d0.png" /><img
+            alt="subsidios página 3" loading="lazy" src="assets/subsidios_page_3_f9489a0e3a.png" /><img
+            alt="subsidios página 4" loading="lazy" src="assets/subsidios_page_4_12b3b833ac.png" /><img
+            alt="subsidios página 5" loading="lazy" src="assets/subsidios_page_5_f496def458.png" /><img
+            alt="subsidios página 6" loading="lazy" src="assets/subsidios_page_6_11d002d01a.png" /><img
+            alt="subsidios página 7" loading="lazy" src="assets/subsidios_page_7_bf920df65a.png" /><img
+            alt="subsidios página 8" loading="lazy" src="assets/subsidios_page_8_30170f8f7f.png" /><img
+            alt="subsidios página 9" loading="lazy" src="assets/subsidios_page_9_8cc460055f.png" /><img
+            alt="subsidios página 10" loading="lazy" src="assets/subsidios_page_10_8d9ac7f87f.png" /><img
+            alt="subsidios página 11" loading="lazy" src="assets/subsidios_page_11_42312f0850.png" /><img
+            alt="subsidios página 12" loading="lazy" src="assets/subsidios_page_12_3ffed64e21.png" />
+        </div>
+      </section>
+      <section class="section" id="obf">
+        <header>
+          <div class="head">
+            <h2>OBF</h2>
+          </div>
+        </header>
+        <div class="content">
+          <div class="video-slot">
+            <div style="width:100%;aspect-ratio:16/9;"><iframe allowfullscreen="" frameborder="0" height="100%"
+                scrolling="no"
+                src="https://queirozcavalcanti.sharepoint.com/sites/EquipeCarrefour/_layouts/15/embed.aspx?UniqueId=4ef75d44-7aa7-4ff8-9e03-5675dfcd9116&amp;embed=%7B%22ust%22%3Atrue%2C%22hv%22%3A%22CopyEmbedCode%22%7D&amp;referrer=StreamWebApp&amp;referrerScenario=EmbedDialog.Create"
+                style="width:100%;height:100%;border:1px solid var(--border);border-radius:12px;"
+                title="Reciclagem - OBF" width="100%"></iframe></div>
+          </div><img alt="obf página 1" loading="lazy" src="assets/obf_page_1_71805fa5c1.png" /><img alt="obf página 2"
+            loading="lazy" src="assets/obf_page_2_a2c57f7d52.png" /><img alt="obf página 3" loading="lazy"
+            src="assets/obf_page_3_6de747fd6a.png" /><img alt="obf página 4" loading="lazy"
+            src="assets/obf_page_4_8be19bf410.png" /><img alt="obf página 5" loading="lazy"
+            src="assets/obf_page_5_03be385f0f.png" /><img alt="obf página 6" loading="lazy"
+            src="assets/obf_page_6_46ba432003.png" /><img alt="obf página 7" loading="lazy"
+            src="assets/obf_page_7_f2e89b4609.png" /><img alt="obf página 8" loading="lazy"
+            src="assets/obf_page_8_88c82a4f62.png" /><img alt="obf página 9" loading="lazy"
+            src="assets/obf_page_9_bccee2f305.png" /><img alt="obf página 10" loading="lazy"
+            src="assets/obf_page_10_6ce845f65c.png" />
+        </div>
+      </section>
+      <section class="section" id="pagamentos">
+        <header>
+          <div class="head">
+            <h2>Pagamentos</h2>
+          </div>
+        </header>
+        <div class="content">
+          <div class="video-slot">
+            <div style="width:100%;aspect-ratio:16/9;"><iframe allowfullscreen="" frameborder="0" height="100%"
+                scrolling="no"
+                src="https://queirozcavalcanti.sharepoint.com/sites/EquipeCarrefour/_layouts/15/embed.aspx?UniqueId=1d349a38-78ef-4c73-9b48-545c7f32f892&amp;embed=%7B%22ust%22%3Atrue%2C%22hv%22%3A%22CopyEmbedCode%22%7D&amp;referrer=StreamWebApp&amp;referrerScenario=EmbedDialog.Create"
+                style="width:100%;height:100%;border:1px solid var(--border);border-radius:12px;"
+                title="Reciclagem - Pagamentos" width="100%"></iframe></div><a class="download-link"
+              href="https://queirozcavalcanti.sharepoint.com/:w:/s/EquipeCarrefour/IQCjJ18blOVKQ70ibQPSShQPAdJ1z-qd5MrCAEJV35pJkMs?e=8nV600"
+              rel="noopener" target="_blank"><svg aria-hidden="true" class="dl-icon" viewbox="0 0 24 24">
+                <path
+                  d="M12 3a1 1 0 0 1 1 1v9.586l2.293-2.293a1 1 0 1 1 1.414 1.414l-4.004 4.004a1 1 0 0 1-1.414 0L7.285 12.707A1 1 0 1 1 8.7 11.293L11 13.586V4a1 1 0 0 1 1-1Zm-7 15a1 1 0 0 1 1-1h12a1 1 0 1 1 0 2H6a1 1 0 0 1-1-1Z">
+                </path>
+              </svg><span>Reciclagem Pagamentos</span></a>
+          </div><img alt="pagamentos página 1" loading="lazy" src="assets/pagamentos_page_1_159189384d.png" /><img
+            alt="pagamentos página 2" loading="lazy" src="assets/pagamentos_page_2_d37adc0afa.png" /><img
+            alt="pagamentos página 3" loading="lazy" src="assets/pagamentos_page_3_51b1a9dd56.png" /><img
+            alt="pagamentos página 4" loading="lazy" src="assets/pagamentos_page_4_4a73bf0de8.png" /><img
+            alt="pagamentos página 5" loading="lazy" src="assets/pagamentos_page_5_0195adf667.png" /><img
+            alt="pagamentos página 6" loading="lazy" src="assets/pagamentos_page_6_33279fad20.png" /><img
+            alt="pagamentos página 7" loading="lazy" src="assets/pagamentos_page_7_2dc37197bc.png" /><img
+            alt="pagamentos página 8" loading="lazy" src="assets/pagamentos_page_8_00c5b3c6c5.png" /><img
+            alt="pagamentos página 9" loading="lazy" src="assets/pagamentos_page_9_419af6d67b.png" /><img
+            alt="pagamentos página 10" loading="lazy" src="assets/pagamentos_page_10_2f489a1be0.png" /><img
+            alt="pagamentos página 11" loading="lazy" src="assets/pagamentos_page_11_d3f563bb6c.png" /><img
+            alt="pagamentos página 12" loading="lazy" src="assets/pagamentos_page_12_9d576b67af.png" /><img
+            alt="pagamentos página 13" loading="lazy" src="assets/pagamentos_page_13_319f02df60.png" /><img
+            alt="pagamentos página 14" loading="lazy" src="assets/pagamentos_page_14_9fb846fc8c.png" />
+        </div>
+      </section>
+    </div>
+  </main>
+  <div class="footer">Manual de Fluxos Carrefour</div>
+  <script>(function () {
+      const root = document.documentElement;
+      const toggleBtn = document.getElementById('themeToggle');
+      const searchInput = document.getElementById('search');
+      const clearBtn = document.getElementById('clearSearch');
+
+      function setTheme(mode) {
+        if (mode === 'dark') root.classList.add('dark'); else root.classList.remove('dark');
+        localStorage.setItem('manual_theme', mode);
+        toggleBtn.setAttribute('aria-pressed', mode === 'dark');
+        toggleBtn.querySelector('span').textContent = mode === 'dark' ? 'Tema: Escuro' : 'Tema: Claro';
+      }
+      const saved = localStorage.getItem('manual_theme');
+      if (saved) setTheme(saved);
+      else setTheme(window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
+      toggleBtn.addEventListener('click', () => setTheme(root.classList.contains('dark') ? 'light' : 'dark'));
+
+      const sections = Array.from(document.querySelectorAll('.section'));
+      const details = Array.from(document.querySelectorAll('details.details'));
+
+      function showSection(sectionId, anchorId) {
+        sections.forEach(sec => sec.classList.toggle('hidden', sec.id !== sectionId));
+        details.forEach(d => d.open = (d.getAttribute('data-section') === sectionId));
+        if (anchorId) {
+          setTimeout(() => { const el = document.getElementById(anchorId); if (el) el.scrollIntoView({ behavior: 'smooth', block: 'start' }); }, 0);
+        } else {
+          window.scrollTo({ top: 0, behavior: 'instant' });
+        }
+      }
+      function parseHash() {
+        const h = (location.hash || '').replace('#', '');
+        if (!h) return null;
+        const sec = document.getElementById(h);
+        if (sec && sec.classList.contains('section')) return { section: h, anchor: null };
+        const el = document.getElementById(h);
+        if (el) { const parent = el.closest('.section'); if (parent) return { section: parent.id, anchor: h }; }
+        return null;
+      }
+      function initNav() {
+        const info = parseHash();
+        const first = sections[0]?.id;
+        if (info) showSection(info.section, info.anchor);
+        else if (first) showSection(first, null);
+      }
+      window.addEventListener('hashchange', initNav);
+      initNav();
+
+      function stripMarks(container) {
+        container.querySelectorAll('mark').forEach(m => m.replaceWith(document.createTextNode(m.textContent)));
+      }
+      function highlight(container, q) {
+        stripMarks(container);
+        if (!q) return;
+        const walker = document.createTreeWalker(container, NodeFilter.SHOW_TEXT, null);
+        const nodes = []; while (walker.nextNode()) nodes.push(walker.currentNode);
+        nodes.forEach(node => {
+          const val = node.nodeValue; const low = val.toLowerCase(); const idx = low.indexOf(q);
+          if (idx > -1) {
+            const before = document.createTextNode(val.slice(0, idx));
+            const mark = document.createElement('mark'); mark.textContent = val.slice(idx, idx + q.length);
+            const after = document.createTextNode(val.slice(idx + q.length));
+            const parent = node.parentNode;
+            parent.insertBefore(before, node); parent.insertBefore(mark, node); parent.insertBefore(after, node); parent.removeChild(node);
+          }
+        });
+      }
+
+      function searchAll() {
+        const q = searchInput.value.trim().toLowerCase();
+        sections.forEach(sec => {
+          const searchable = Array.from(sec.querySelectorAll('[data-searchable="1"]'));
+          searchable.forEach(el => el.classList.remove('hidden'));
+          stripMarks(sec);
+        });
+        if (!q) return;
+
+        let firstHit = null;
+        sections.forEach(sec => {
+          const searchable = Array.from(sec.querySelectorAll('[data-searchable="1"]'));
+          searchable.forEach(el => {
+            const hit = el.textContent.toLowerCase().includes(q);
+            el.classList.toggle('hidden', !hit);
+            if (hit) {
+              highlight(el, q);
+              if (!firstHit) { firstHit = { sectionId: sec.id, anchorId: el.id || null }; }
+            }
+          });
+        });
+
+        if (firstHit) showSection(firstHit.sectionId, firstHit.anchorId);
+      }
+
+      let t = null;
+      searchInput.addEventListener('input', () => { clearTimeout(t); t = setTimeout(searchAll, 150); });
+      clearBtn.addEventListener('click', () => { searchInput.value = ''; searchAll(); searchInput.focus(); });
+    })();</script>
+</body>
+
+</html>
